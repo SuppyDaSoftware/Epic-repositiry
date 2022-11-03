@@ -6,6 +6,8 @@ public class CameraMovement : MonoBehaviour
 {
 
     public float rotationSpeed;
+    public float mouseSensitivity;
+    private float xRotation;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +18,11 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(Vector3.right, Input.GetAxis("Mouse Y") * -rotationSpeed);
-        //transform.rotation = Quaternion.Euler(Mathf.Clamp(transform.rotation.x, -90, 90), transform.eulerAngles.y, transform.eulerAngles.z);//
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);        
     }
 }
